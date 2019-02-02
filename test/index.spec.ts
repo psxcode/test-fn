@@ -4,6 +4,8 @@ import testfn from '../src'
 
 const add2 = (x: number) => x + 2
 const add = (x: number, y: number) => x + y
+const curryAdd = (x: number) => (y: number) => x + y
+const voidFn = (x: number) => {}
 
 describe('[ testfn ]', () => {
   it('no calls', () => {
@@ -34,6 +36,45 @@ describe('[ testfn ]', () => {
     expect(fn.calls).deep.eq([
       [2, 2],
       [4, 3],
+    ])
+  })
+
+  it('curried function', () => {
+    const fn = testfn(curryAdd)
+
+    const res0 = fn(2)(2)
+    const res1 = fn(4)(3)
+
+    expect(res0).eq(4)
+    expect(res1).eq(7)
+    expect(fn.calls).deep.eq([
+      [2],
+      [4],
+    ])
+  })
+
+  it('void function', () => {
+    const fn = testfn(voidFn)
+
+    const res0 = fn(2)
+
+    expect(res0).eq(undefined)
+    expect(fn.calls).deep.eq([
+      [2],
+    ])
+  })
+
+  it('default function', () => {
+    const fn = testfn()
+
+    const res0 = fn(2)
+    const res1 = fn(4)
+
+    expect(res0).eq(undefined)
+    expect(res1).eq(undefined)
+    expect(fn.calls).deep.eq([
+      [2],
+      [4],
     ])
   })
 })

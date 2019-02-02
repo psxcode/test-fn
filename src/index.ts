@@ -1,11 +1,11 @@
 import { TestFnContext, TestFn } from './types'
 
-export default <T extends any[], R>(fn: (...args: T) => R) => {
+export default <T extends any[], R = void>(fn: (...args: T) => R = () => undefined as any) => {
   const context: TestFnContext = {
     calls: [],
   }
 
-  const tfn = (...args: T): R => {
+  const tfn = (...args: T) => {
     context.calls.push(args)
 
     return fn(...args)
@@ -17,5 +17,5 @@ export default <T extends any[], R>(fn: (...args: T) => R) => {
     get: () => context.calls.slice(),
   })
 
-  return tfn as TestFn<(...args: T) => R>
+  return tfn as TestFn<typeof fn>
 }
