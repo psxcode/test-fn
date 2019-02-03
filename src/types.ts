@@ -1,5 +1,6 @@
-export type TestFnContext = {
-  calls: any[][]
+export type TestFnInterface = {
+  calls: any[][],
+  errors: string[][]
 }
 
-export type TestFn <T extends Function> = T & TestFnContext
+export type TestFn <T extends Function> = T & TestFnInterface

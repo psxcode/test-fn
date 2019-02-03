@@ -77,4 +77,18 @@ describe('[ testfn ]', () => {
       [4],
     ])
   })
+
+  it('errors', () => {
+    const fn = testfn()
+
+    const res0 = fn(new Error('err 01'))
+    const res1 = fn({ a: 42 })
+    const res2 = fn(new Error('err 02'))
+
+    expect(fn.errors).deep.eq([
+      ['err 01'],
+      [undefined],
+      ['err 02'],
+    ])
+  })
 })
