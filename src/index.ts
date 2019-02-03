@@ -1,7 +1,7 @@
 import { TestFn } from './types'
 
 const isError = (obj: any): obj is Error => {
-  return typeof obj === 'object' && typeof obj.stack === 'string' && typeof obj.message === 'string'
+  return typeof obj === 'object' && typeof obj.stack === 'string'
 }
 
 export default <T extends any[], R = void>(fn: (...args: T) => R = () => undefined as any) => {
